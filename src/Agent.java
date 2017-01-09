@@ -1,119 +1,123 @@
 import java.util.Random;
 
 public class Agent {
+	
 	private int posX,posY;
-	private Colour color;
-	private enum Colour {
-		  Jaune,
-		  Rouge,
-		  Bleu,
-		  Vert;	
-		}
-	private Environment env;
-	public Agent(Environment env,int posX,int posY, Colour color) {
-		this.env=env;
+	private int posXTmp, posYTmp;
+	private MyColor color;
+	private String direction;
+	
+	public Agent(int posX,int posY, MyColor color, String direction) {
 		this.color = color;
 		this.setPosX(posX);
 		this.setPosY(posY);
+		this.direction = initializeDirection();
+	}
+		
+	public String initializeDirection(){
+		Random r = new Random();
+		int nbDir = r.nextInt(Direction.dir.length);
+		return Direction.dir[nbDir];
 	}
 	
+	public void updateTmp(int posXTmp, int posYTmp) {
+		this.posXTmp = posXTmp;
+		this.posYTmp = posYTmp;
+	}
 	
 	public void update(int posX, int posY) {
 		this.posX = posX;
 		this.posY = posY;
 	}
-	public void decide() {
-		Random r = new Random();
-		int rand = r.nextInt(7)+1;
-		switch (rand) {
-		case 1:
-			actD();
+	
+	public void decide(){
+		findNewPosition();
+		makeAction();
+	}
+	
+	public MyColor getColor() {
+		return color;
+	}
+
+	public void setColor(MyColor color) {
+		this.color = color;
+	}
+
+	public void findNewPosition(){
+		switch(this.direction){
+		case "N":
+			posXTmp = posX;
+			posYTmp = posY + 1;
 			break;
-		case 2:
-			actDB();
+		case "S":
+			posXTmp = posX;
+			posYTmp = posY - 1;
 			break;
-		case 3:
-			actB();
+		case "W":
+			posXTmp = posX - 1;
+			posYTmp = posY;
 			break;
-		case 4:
-			actBG();
+		case "E":
+			posXTmp = posX + 1;
+			posYTmp = posY;
 			break;
-		case 5:
-			actG();
+		case "NW":
+			posXTmp = posX - 1;
+			posYTmp = posY + 1;
 			break;
-		case 6:
-			actGH();
+		case "NE":
+			posXTmp = posX + 1;
+			posYTmp = posY + 1;
 			break;
-		case 7:
-			actH();
+		case "SW":
+			posXTmp = posX - 1;
+			posYTmp = posY + 1;
 			break;
-		case 8:
-			actHD();
-			break;	
-		default:
+		case "SE":
+			posXTmp = posX + 1 ;
+			posYTmp = posY + 1;
 			break;
 		}
 	}
-	
-	private Agent getElementOn(int posX, int posY) {
-		Agent[][] tab = env.getEnv2d();
-		return tab[posX][posY];
-	}
-	private boolean isBound(int posX, int posY) {
-		if(env.getTailleX() == posX || env.getTailleY() ==posY)return true;
-		return false;
-	}
-	private void permuter(int posX, int posY) {
-		int tmpX = this.posX;
-		int tmpY = this.posY;
-		update(posX, posY);
-		env.getEnv2d()[tmpX][tmpY] = this;
-	}
-	public void actD() {
-		if(isBound(posX+1, posY)) {
-			Agent tmp = getElementOn(0, posY);
-			if(tmp == null) {
-				update(0, posY);
-			} else {
-				tmp.permuter(this.posX, this.posY);
-				update(0, posY);
-				env.getEnv2d()[0][posY] = this;
-			}
+
+	public void makeAction(){
+		// Outside the map
+		if(posXTmp >= Environment.getTailleX()){
+			posXTmp = 0;
 		}
-		Agent a = getElementOn(posX+1, posY);
-		if(a == null) {
-			Agent tmp = getElementOn(0, posY);
+		if(posXTmp == -1){
+			posXTmp = Environment.getTailleX() - 1;
 		}
-	}
-	public void actDB() {
+		if(posYTmp >= Environment.getTailleY()){
+			posYTmp = 0;
+		}
+		if(posYTmp == -1){
+			posYTmp = Environment.getTailleY() - 1;
+		}
 		
+		// On an existent Agent
+		if(Environment.getTab()[posXTmp][posYTmp] != null){
+			Agent swapAgent = Environment.getTab()[posXTmp][posYTmp];
+			swapAgent(swapAgent);
+			findNewPosition();
+		}
+		
+		posX = posXTmp;
+		posY = posYTmp;
 	}
 	
-	public void actB() {
+	public void swapAgent(Agent swapAgent){
+		String myDirection = this.direction;
+		String hisDirection = swapAgent.direction;
 		
-	}
-	public void actBG() {
-		
-	}
-	
-	public void actG() {
-		
-	}
-	public void actGH() {
-		
-	}
-	public void actH() {
-		
-	}
-	public void actHD() {
-		
+		swapAgent.direction = myDirection;
+		this.direction = hisDirection;
 	}
 
 	public int getPosX() {
 		return posX;
 	}
-
-
+	
 	public void setPosX(int posX) {
 		this.posX = posX;
 	}
