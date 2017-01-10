@@ -16,10 +16,10 @@ public class Environment extends Observable {
 	private int nbAgent;
 	
 	public Environment() {
-		tab = new Agent[5][5];
-		tailleX = 5;
-		tailleY = 5;
-		nbAgent = 9;
+		tab = new Agent[20][20];
+		tailleX = 20;
+		tailleY = 20;
+		nbAgent = 10;
 	}
 
 	/**

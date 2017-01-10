@@ -38,7 +38,7 @@ public class SMA extends Observable{
 			setChanged();
 
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 			} catch (InterruptedException e) {
 				System.err.println("sleep problem");
 				e.printStackTrace();
