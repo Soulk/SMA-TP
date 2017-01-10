@@ -27,6 +27,7 @@ public class SMA extends Observable{
 		while(true){
 			for(Agent agent : listAgent){
 				agent.decide();
+				System.out.println("");
 			}
 			environment.update(listAgent);
 			environment.printTest();
@@ -37,7 +38,7 @@ public class SMA extends Observable{
 			setChanged();
 
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
 				System.err.println("sleep problem");
 				e.printStackTrace();

@@ -19,7 +19,7 @@ public class Environment extends Observable {
 		tab = new Agent[5][5];
 		tailleX = 5;
 		tailleY = 5;
-		nbAgent = 4;
+		nbAgent = 9;
 	}
 
 	/**
@@ -87,14 +87,14 @@ public class Environment extends Observable {
 	 * @param agents
 	 */
 	public void update(List<Agent> agents){
-		for(int i = 0; i<Environment.getTailleX(); i++){
+		/*for(int i = 0; i<Environment.getTailleX(); i++){
 			for(int j = 0; j<Environment.getTailleY(); j++){
 				tab[i][j] = null;
 			}
 		}
 		for(Agent agent : agents){
 			tab[agent.getPosX()][agent.getPosY()] = agent;
-		}
+		}*/
 	}
 	
 	public void printTest(){

@@ -48,6 +48,8 @@ public class Agent {
 	}
 
 	public void findNewPosition(){
+		System.out.println("["+this.getPosX() + ", " + this.getPosY()+"] "+"want to go " + this.direction);
+
 		switch(this.direction){
 		case "N":
 			posXTmp = posX-1;
@@ -87,15 +89,24 @@ public class Agent {
 	public void makeAction(){
 		checkBounds();
 		// On an existent Utils.Agent
-		while(Environment.getTab()[posXTmp][posYTmp] != null){
+		if(Environment.getTab()[posXTmp][posYTmp] != null){
 			Agent swapAgent = Environment.getTab()[posXTmp][posYTmp];
+			System.out.println("He collide with " + "["+swapAgent.getPosX() + ", " + swapAgent.getPosY()+"] ");
 			swapAgent(swapAgent);
 			findNewPosition();
 			checkBounds();
+			if(Environment.getTab()[posXTmp][posYTmp] != null)
+				this.makeAction();
 		}
-		
+
+		Environment.getTab()[posX][posY] = null;
+
 		posX = posXTmp;
 		posY = posYTmp;
+
+		Environment.getTab()[posX][posY] = this;
+
+		System.out.println("He go to ["+posX+", "+posY+"]");
 	}
 	public void checkBounds() {
 		// Outside the map
