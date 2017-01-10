@@ -50,7 +50,7 @@ public class Agent {
 	}
 
 	public void findNewPosition(){
-		System.out.println("["+this.getPosX() + ", " + this.getPosY()+"] "+"want to go " + this.direction);
+		if(PropertiesReader.getInstance().getProperties("trace").equals("true"))System.out.println("["+this.getPosX() + ", " + this.getPosY()+"] "+"want to go " + this.direction);
 
 		switch(this.direction){
 		case "N":
@@ -93,7 +93,7 @@ public class Agent {
 		// On an existent Utils.Agent
 		if(Environment.getTab()[posXTmp][posYTmp] != null){
 			Agent swapAgent = Environment.getTab()[posXTmp][posYTmp];
-			System.out.println("He collide with " + "["+swapAgent.getPosX() + ", " + swapAgent.getPosY()+"] ");
+			if(PropertiesReader.getInstance().getProperties("trace").equals("true"))System.out.println("He collide with " + "["+swapAgent.getPosX() + ", " + swapAgent.getPosY()+"] ");
 			swapAgent(swapAgent);
 			findNewPosition();
 			checkBounds();
@@ -114,7 +114,7 @@ public class Agent {
 
 		Environment.getTab()[posX][posY] = this;
 
-		System.out.println("He go to ["+posX+", "+posY+"]");
+		if(PropertiesReader.getInstance().getProperties("trace").equals("true"))System.out.println("He go to ["+posX+", "+posY+"]");
 	}
 	public void takeNextFreeSpace() {
 		for(int i=0;i<Direction.dir.length; i++) {

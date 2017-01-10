@@ -1,15 +1,14 @@
 package model;
 
-import Utils.Agent;
-import Utils.Direction;
-import Utils.MyColor;
-import Utils.PropertiesReader;
-
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
+
+import Utils.Agent;
+import Utils.Direction;
+import Utils.MyColor;
+import Utils.PropertiesReader;
 
 public class Environment extends Observable {
 	private static Agent[][] tab;
@@ -102,16 +101,16 @@ public class Environment extends Observable {
 	}
 	
 	public void printTest(){
-		System.out.println("<<<<<<<< Mon petit tableau >>>>>>>>");
+		if(PropertiesReader.getInstance().getProperties("trace").equals("true"))System.out.println("<<<<<<<< Mon petit tableau >>>>>>>>");
 		for(int i = 0; i<tailleX; i++){
 			for(int j = 0; j<tailleY; j++){
 				if(tab[i][j] != null){
-					System.out.print("0");
+					if(PropertiesReader.getInstance().getProperties("trace").equals("true"))System.out.print("0");
 				} else {
-					System.out.print("-");
+					if(PropertiesReader.getInstance().getProperties("trace").equals("true"))System.out.print("-");
 				}
 			}
-			System.out.println("");
+			if(PropertiesReader.getInstance().getProperties("trace").equals("true"))System.out.println("");
 		}
 
 	}
