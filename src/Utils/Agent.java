@@ -1,3 +1,7 @@
+package Utils;
+
+import model.Environment;
+
 import java.util.Random;
 
 public class Agent {
@@ -95,7 +99,7 @@ public class Agent {
 			posYTmp = Environment.getTailleY() - 1;
 		}
 		
-		// On an existent Agent
+		// On an existent Utils.Agent
 		if(Environment.getTab()[posXTmp][posYTmp] != null){
 			Agent swapAgent = Environment.getTab()[posXTmp][posYTmp];
 			swapAgent(swapAgent);

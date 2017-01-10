@@ -1,7 +1,12 @@
+package model;
+
+import Utils.Agent;
+import Utils.Direction;
+import Utils.MyColor;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.Random;
 
 public class Environment extends Observable {
@@ -37,13 +42,13 @@ public class Environment extends Observable {
 			MyColor color = MyColor.randomColor();
 			
 			// find a direction
-			String direction = Direction.dir[r.nextInt(Direction.dir.length)];	
+			String direction = Direction.dir[r.nextInt(Direction.dir.length)];
 			
 			// create the agent
 			Agent agent = new Agent(x, y, color, direction);
 			agents.add(agent);
 			
-			// put the agent in the Environment
+			// put the agent in the model.Environment
 			tab[agent.getPosX()][agent.getPosY()] = agent;
 		}
 		return agents;

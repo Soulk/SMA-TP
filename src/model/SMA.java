@@ -1,7 +1,10 @@
+package model;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Observable;
-
+import Utils.Agent;
+import View.View;
 
 public class SMA extends Observable{
 	private List<Agent>listAgent;

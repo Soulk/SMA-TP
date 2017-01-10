@@ -1,3 +1,8 @@
+import Utils.Agent;
+import View.View;
+import model.Environment;
+import model.SMA;
+
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +15,7 @@ public class Main {
 		Environment env = new Environment();
 		View view = new View(env);
 		
-		// View
+		// View.View
 		JFrame f = new JFrame();
 		f.setSize(500, 500);
 		f.setLayout(new BorderLayout());
