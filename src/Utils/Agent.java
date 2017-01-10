@@ -10,12 +10,14 @@ public class Agent {
 	private int posXTmp, posYTmp;
 	private MyColor color;
 	private String direction;
+	private int cptCheckAround;
 	
 	public Agent(int posX,int posY, MyColor color, String direction) {
 		this.color = color;
 		this.setPosX(posX);
 		this.setPosY(posY);
 		this.direction = initializeDirection();
+		this.cptCheckAround =0;
 	}
 		
 	public String initializeDirection(){
@@ -96,9 +98,15 @@ public class Agent {
 			findNewPosition();
 			checkBounds();
 			if(Environment.getTab()[posXTmp][posYTmp] != null)
-				this.makeAction();
-		}
 
+				if(cptCheckAround <Direction.dir.length) {
+					cptCheckAround++;
+					this.makeAction();
+				}else {	
+					takeNextFreeSpace();
+				}
+		}
+		this.cptCheckAround = 0;
 		Environment.getTab()[posX][posY] = null;
 
 		posX = posXTmp;
@@ -107,6 +115,49 @@ public class Agent {
 		Environment.getTab()[posX][posY] = this;
 
 		System.out.println("He go to ["+posX+", "+posY+"]");
+	}
+	public void takeNextFreeSpace() {
+		for(int i=0;i<Direction.dir.length; i++) {
+			switch(Direction.dir[i]){
+			case "N":
+				posXTmp = posX-1;
+				posYTmp = posY;
+				break;
+			case "S":
+				posXTmp = posX+1;
+				posYTmp = posY;
+				break;
+			case "W":
+				posXTmp = posX;
+				posYTmp = posY-1;
+				break;
+			case "E":
+				posXTmp = posX;
+				posYTmp = posY+1;
+				break;
+			case "NW":
+				posXTmp = posX - 1;
+				posYTmp = posY - 1;
+				break;
+			case "NE":
+				posXTmp = posX - 1;
+				posYTmp = posY + 1;
+				break;
+			case "SW":
+				posXTmp = posX+1;
+				posYTmp = posY - 1;
+				break;
+			case "SE":
+				posXTmp = posX+1;
+				posYTmp = posY + 1;
+				break;
+			}
+			checkBounds();
+			if(Environment.getTab()[posXTmp][posYTmp] == null){
+				i = Direction.dir.length;
+			}
+			
+		}
 	}
 	public void checkBounds() {
 		// Outside the map

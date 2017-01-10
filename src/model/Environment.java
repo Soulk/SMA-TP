@@ -23,6 +23,7 @@ public class Environment extends Observable {
 		tailleX = Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeX"));
 		tailleY = Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeY"));
 		nbAgent = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbParticles"));
+
 	}
 
 	/**
