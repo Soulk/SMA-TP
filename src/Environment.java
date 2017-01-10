@@ -16,7 +16,11 @@ public class Environment extends Observable {
 		tailleY = 10;
 		nbAgent = 5;
 	}
-	
+
+	/**
+	 * create all the agents
+	 * @return
+	 */
 	public List<Agent> initialisation() {
 		List<Agent> agents = new ArrayList<Agent>();
 		
@@ -44,7 +48,13 @@ public class Environment extends Observable {
 		}
 		return agents;
 	}
-	
+
+	/**
+	 * test if a position doesn't contains an existant agent or is outside the map
+	 * @param x
+	 * @param y
+	 * @return
+	 */
 	public Boolean isAGoodPosition(int x, int y){
 		if(x < 0 || y < 0)
 			return false;
@@ -66,7 +76,11 @@ public class Environment extends Observable {
 	public static Agent[][] getTab(){
 		return tab;
 	}
-	
+
+	/**
+	 * update the environment tab with the new agents
+	 * @param agents
+	 */
 	public void update(List<Agent> agents){
 		for(int i = 0; i<Environment.getTailleX(); i++){
 			for(int j = 0; j<Environment.getTailleY(); j++){

@@ -16,13 +16,18 @@ public class SMA extends Observable{
 		this.listAgent = environment.initialisation();
 	}
 
+	/**
+	 * run the simulation
+	 */
 	public void run() {
+
 		while(true){
 			for(Agent agent : listAgent){
 				agent.decide();
 			}
 			environment.update(listAgent);
 			environment.printTest();
+
 			Collections.shuffle(listAgent);
 
 			notifyObservers();

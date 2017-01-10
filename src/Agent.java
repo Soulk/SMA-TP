@@ -105,7 +105,11 @@ public class Agent {
 		posX = posXTmp;
 		posY = posYTmp;
 	}
-	
+
+	/**
+	 * use when two agents will collide
+	 * @param swapAgent
+	 */
 	public void swapAgent(Agent swapAgent){
 		String myDirection = this.direction;
 		String hisDirection = swapAgent.direction;
