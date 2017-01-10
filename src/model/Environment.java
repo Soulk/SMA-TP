@@ -3,7 +3,9 @@ package model;
 import Utils.Agent;
 import Utils.Direction;
 import Utils.MyColor;
+import Utils.PropertiesReader;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -16,10 +18,11 @@ public class Environment extends Observable {
 	private int nbAgent;
 	
 	public Environment() {
-		tab = new Agent[5][5];
-		tailleX = 5;
-		tailleY = 5;
-		nbAgent = 9;
+		tab = new Agent[Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeX"))]
+					   [Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeY"))];
+		tailleX = Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeX"));
+		tailleY = Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeY"));
+		nbAgent = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbParticles"));
 	}
 
 	/**
