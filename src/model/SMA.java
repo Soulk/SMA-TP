@@ -12,11 +12,11 @@ public class SMA extends Observable{
 
 	public SMA(List<Agent> listAgent, View view) {
 		this.addObserver(view);
-		setChanged();
-		notifyObservers();
 
 		environment = new Environment();
 		this.listAgent = environment.initialisation();
+		notifyObservers();
+		setChanged();
 	}
 
 	/**

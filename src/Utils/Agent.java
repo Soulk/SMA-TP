@@ -50,41 +50,54 @@ public class Agent {
 	public void findNewPosition(){
 		switch(this.direction){
 		case "N":
-			posXTmp = posX;
-			posYTmp = posY + 1;
+			posXTmp = posX-1;
+			posYTmp = posY;
 			break;
 		case "S":
-			posXTmp = posX;
-			posYTmp = posY - 1;
+			posXTmp = posX+1;
+			posYTmp = posY;
 			break;
 		case "W":
-			posXTmp = posX - 1;
-			posYTmp = posY;
+			posXTmp = posX;
+			posYTmp = posY-1;
 			break;
 		case "E":
-			posXTmp = posX + 1;
-			posYTmp = posY;
+			posXTmp = posX;
+			posYTmp = posY+1;
 			break;
 		case "NW":
 			posXTmp = posX - 1;
-			posYTmp = posY + 1;
+			posYTmp = posY - 1;
 			break;
 		case "NE":
-			posXTmp = posX + 1;
-			posYTmp = posY + 1;
-			break;
-		case "SW":
 			posXTmp = posX - 1;
 			posYTmp = posY + 1;
 			break;
+		case "SW":
+			posXTmp = posX+1;
+			posYTmp = posY - 1;
+			break;
 		case "SE":
-			posXTmp = posX + 1 ;
+			posXTmp = posX+1;
 			posYTmp = posY + 1;
 			break;
 		}
 	}
 
 	public void makeAction(){
+		checkBounds();
+		// On an existent Utils.Agent
+		while(Environment.getTab()[posXTmp][posYTmp] != null){
+			Agent swapAgent = Environment.getTab()[posXTmp][posYTmp];
+			swapAgent(swapAgent);
+			findNewPosition();
+			checkBounds();
+		}
+		
+		posX = posXTmp;
+		posY = posYTmp;
+	}
+	public void checkBounds() {
 		// Outside the map
 		if(posXTmp >= Environment.getTailleX()){
 			posXTmp = 0;
@@ -98,16 +111,6 @@ public class Agent {
 		if(posYTmp == -1){
 			posYTmp = Environment.getTailleY() - 1;
 		}
-		
-		// On an existent Utils.Agent
-		if(Environment.getTab()[posXTmp][posYTmp] != null){
-			Agent swapAgent = Environment.getTab()[posXTmp][posYTmp];
-			swapAgent(swapAgent);
-			findNewPosition();
-		}
-		
-		posX = posXTmp;
-		posY = posYTmp;
 	}
 
 	/**

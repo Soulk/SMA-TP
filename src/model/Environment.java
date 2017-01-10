@@ -16,10 +16,10 @@ public class Environment extends Observable {
 	private int nbAgent;
 	
 	public Environment() {
-		tab = new Agent[10][10];
-		tailleX = 10;
-		tailleY = 10;
-		nbAgent = 5;
+		tab = new Agent[5][5];
+		tailleX = 5;
+		tailleY = 5;
+		nbAgent = 4;
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class Environment extends Observable {
 	 * @return
 	 */
 	public Boolean isAGoodPosition(int x, int y){
-		if(x < 0 || y < 0)
+		if(x < 0 || y < 0 || x > tailleX || y > tailleY)
 			return false;
 		else if (tab[x][y] != null )
 			return false;
@@ -99,8 +99,8 @@ public class Environment extends Observable {
 	
 	public void printTest(){
 		System.out.println("<<<<<<<< Mon petit tableau >>>>>>>>");
-		for(int i = 0; i<Environment.getTailleX(); i++){
-			for(int j = 0; j<Environment.getTailleY(); j++){
+		for(int i = 0; i<tailleX; i++){
+			for(int j = 0; j<tailleY; j++){
 				if(tab[i][j] != null){
 					System.out.print("0");
 				} else {
