@@ -160,18 +160,37 @@ public class Agent {
 		}
 	}
 	public void checkBounds() {
+		boolean changed = false;
 		// Outside the map
 		if(posXTmp >= Environment.getTailleX()){
 			posXTmp = 0;
+			if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
+				posXTmp = Environment.getTailleX() - 2;
+				this.direction = Direction.getAntiDir(this.direction);
+				changed = true;
+			}
 		}
 		if(posXTmp == -1){
 			posXTmp = Environment.getTailleX() - 1;
+			if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
+				posXTmp = 1;
+				this.direction = Direction.getAntiDir(this.direction);
+				changed = true;
+			}
 		}
 		if(posYTmp >= Environment.getTailleY()){
 			posYTmp = 0;
+			if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
+				posYTmp = Environment.getTailleY() - 2;
+				if(!changed)this.direction = Direction.getAntiDir(this.direction);
+			}
 		}
 		if(posYTmp == -1){
 			posYTmp = Environment.getTailleY() - 1;
+			if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
+				posYTmp = 1;
+				if(!changed)this.direction = Direction.getAntiDir(this.direction);
+			}
 		}
 	}
 
