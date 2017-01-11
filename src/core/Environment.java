@@ -1,27 +1,25 @@
-package model;
+package core;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
-import Utils.Agent;
-import Utils.Direction;
-import Utils.MyColor;
-import Utils.PropertiesReader;
-
 public class Environment extends Observable {
 	private static Agent[][] tab;
 	private static int tailleX;
 	private static int tailleY;
 	private int nbAgent;
-	
+	private int nbTicks;
+
+
 	public Environment() {
 		tab = new Agent[Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeX"))]
 					   [Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeY"))];
 		tailleX = Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeX"));
 		tailleY = Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeY"));
 		nbAgent = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbParticles"));
+        nbTicks = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbTicks"));
 
 	}
 
@@ -37,8 +35,8 @@ public class Environment extends Observable {
 			Random r = new Random();
 			int x = -1 , y = -1;
 			while(!isAGoodPosition(x, y)){
-				x = r.nextInt(tailleX - 1);
-				y = r.nextInt(tailleY - 1);
+				x = r.nextInt(tailleX );
+				y = r.nextInt(tailleY );
 			}
 			
 			//find a color
@@ -51,7 +49,7 @@ public class Environment extends Observable {
 			Agent agent = new Agent(x, y, color, direction);
 			agents.add(agent);
 			
-			// put the agent in the model.Environment
+			// put the agent in the core.Environment
 			tab[agent.getPosX()][agent.getPosY()] = agent;
 		}
 		return agents;
@@ -114,4 +112,17 @@ public class Environment extends Observable {
 		}
 
 	}
+
+	public static String findWall(int x, int y) {
+        String pos ="";
+        if(x == -1) pos+="N";
+        if(x >= tailleX) pos+="S";
+        if(y == -1)pos+="W";
+        if(y >= tailleY)pos+="E";
+        return pos;
+    }
+
+	public int getNbTicks(){
+        return nbTicks;
+    }
 }

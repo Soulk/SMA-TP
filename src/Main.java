@@ -1,7 +1,8 @@
-import Utils.Agent;
-import View.View;
-import model.Environment;
-import model.SMA;
+import core.Agent;
+import core.PropertiesReader;
+import core.View;
+import core.Environment;
+import core.SMA;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -15,9 +16,9 @@ public class Main {
 		Environment env = new Environment();
 		View view = new View(env);
 		
-		// View.View
+		// core.View
 		JFrame f = new JFrame();
-		f.setSize(500, 500);
+		f.setSize(Integer.parseInt(PropertiesReader.getInstance().getProperties("canvasSizeX")), Integer.parseInt(PropertiesReader.getInstance().getProperties("canvasSizeY")));
 		f.setLayout(new BorderLayout());
 		f.add(view, BorderLayout.CENTER);
 		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

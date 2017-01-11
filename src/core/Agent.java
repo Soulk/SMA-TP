@@ -1,6 +1,4 @@
-package Utils;
-
-import model.Environment;
+package core;
 
 import java.util.Random;
 
@@ -90,7 +88,7 @@ public class Agent {
 
 	public void makeAction(){
 		checkBounds();
-		// On an existent Utils.Agent
+		// On an existent core.Agent
 		if(Environment.getTab()[posXTmp][posYTmp] != null){
 			Agent swapAgent = Environment.getTab()[posXTmp][posYTmp];
 			if(PropertiesReader.getInstance().getProperties("trace").equals("true"))System.out.println("He collide with " + "["+swapAgent.getPosX() + ", " + swapAgent.getPosY()+"] ");
@@ -156,6 +154,10 @@ public class Agent {
 			if(Environment.getTab()[posXTmp][posYTmp] == null){
 				i = Direction.dir.length;
 			}
+			if(i==Direction.dir.length-1) {
+				posXTmp = posX;
+				posYTmp = posY;
+			}
 			
 		}
 	}
@@ -163,33 +165,37 @@ public class Agent {
 		boolean changed = false;
 		// Outside the map
 		if(posXTmp >= Environment.getTailleX()){
+			String wall =  Environment.findWall(posXTmp,posYTmp);
 			posXTmp = 0;
 			if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
 				posXTmp = Environment.getTailleX() - 2;
-				this.direction = Direction.getAntiDir(this.direction);
+				this.direction = Direction.getAntiDir(this.direction, wall);
 				changed = true;
 			}
 		}
 		if(posXTmp == -1){
+			String wall =  Environment.findWall(posXTmp,posYTmp);
 			posXTmp = Environment.getTailleX() - 1;
 			if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
 				posXTmp = 1;
-				this.direction = Direction.getAntiDir(this.direction);
+				this.direction = Direction.getAntiDir(this.direction, wall);
 				changed = true;
 			}
 		}
 		if(posYTmp >= Environment.getTailleY()){
+			String wall =  Environment.findWall(posXTmp,posYTmp);
 			posYTmp = 0;
 			if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
 				posYTmp = Environment.getTailleY() - 2;
-				if(!changed)this.direction = Direction.getAntiDir(this.direction);
+				if(!changed)this.direction = Direction.getAntiDir(this.direction,wall);
 			}
 		}
 		if(posYTmp == -1){
+			String wall =  Environment.findWall(posXTmp,posYTmp);
 			posYTmp = Environment.getTailleY() - 1;
 			if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
 				posYTmp = 1;
-				if(!changed)this.direction = Direction.getAntiDir(this.direction);
+				if(!changed)this.direction = Direction.getAntiDir(this.direction,wall);
 			}
 		}
 	}

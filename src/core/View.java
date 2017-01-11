@@ -1,9 +1,4 @@
-package View;
-
-import Utils.Agent;
-import Utils.MyColor;
-import Utils.PropertiesReader;
-import model.Environment;
+package core;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,10 +13,12 @@ public class View extends JPanel implements Observer{
 
 	private Environment env;
 	private int canvasSizeX, canvasSizeY, boxSize;
+	private int cptTicks;
 	
 	public View (Environment env){
 		super();
 		this.env = env;
+		cptTicks = this.env.getNbTicks();
 		
 		this.canvasSizeX = Integer.parseInt(PropertiesReader.getInstance().getProperties("canvasSizeX"));
 		this.canvasSizeY = Integer.parseInt(PropertiesReader.getInstance().getProperties("canvasSizeY"));
@@ -40,8 +37,10 @@ public class View extends JPanel implements Observer{
 					g.setColor(getColor(Environment.getTab()[i][j]));
 					g.fillRect(j * boxSize, i * boxSize, boxSize, boxSize);
 				} else {
-					g.setColor(Color.GRAY);
-                    g.drawRect(j * boxSize, i * boxSize, boxSize-1, boxSize-1);
+					if(PropertiesReader.getInstance().getProperties("grid").equals("true")) {
+						g.setColor(Color.GRAY);
+						g.drawRect(j * boxSize, i * boxSize, boxSize - 1, boxSize - 1);
+					}
 				}
 			}
 		}
@@ -63,7 +62,10 @@ public class View extends JPanel implements Observer{
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		repaint();
+		if(cptTicks % Integer.parseInt(PropertiesReader.getInstance().getProperties("refresh")) == 0)
+			repaint();
+
+		cptTicks --;
 	}
 
 }
