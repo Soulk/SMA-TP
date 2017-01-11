@@ -2,13 +2,17 @@ package core;
 
 import java.util.Random;
 
-public class Agent {
+public abstract class Agent {
 	
 	private int posX,posY;
 	private int posXTmp, posYTmp;
 	private MyColor color;
 	private String direction;
 	private int cptCheckAround;
+
+	public Agent(){
+
+	}
 	
 	public Agent(int posX,int posY, MyColor color, String direction) {
 		this.color = color;
@@ -34,10 +38,7 @@ public class Agent {
 		this.posY = posY;
 	}
 	
-	public void decide(){
-		findNewPosition();
-		makeAction();
-	}
+	public abstract void decide();
 	
 	public MyColor getColor() {
 		return color;

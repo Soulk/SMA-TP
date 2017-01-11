@@ -1,5 +1,7 @@
 package core;
 
+import particules.Particules;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -46,7 +48,7 @@ public class Environment extends Observable {
 			String direction = Direction.dir[r.nextInt(Direction.dir.length)];
 			
 			// create the agent
-			Agent agent = new Agent(x, y, color, direction);
+			Agent agent = new Particules(x, y, color, direction);
 			agents.add(agent);
 			
 			// put the agent in the core.Environment
