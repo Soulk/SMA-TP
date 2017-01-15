@@ -87,6 +87,16 @@ public abstract class Agent {
 		}
 	}
 
+	/**
+	 * check if the agent made a move or not, during the click
+	 * @return
+	 */
+	public Boolean madeAMove(int oldX, int oldY){
+		if(posX != oldX || posY != oldY)
+			return true;
+		return false;
+	}
+	
 	public void makeAction(){
 		checkBounds();
 		// On an existent core.Agent

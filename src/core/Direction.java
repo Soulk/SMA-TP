@@ -1,10 +1,17 @@
 package core;
 
+import java.util.Random;
+
 public class  Direction {
 
 	public static String[] dir = {"N","S","W","E","NW","NE", "SW", "SE"};
 	
-	public static String getAntiDir(String direction, String wall) {
+	public static String getRandomDirection(){
+		Random r = new Random();
+		return dir[r.nextInt(dir.length)];
+	}
+	
+ 	public static String getAntiDir(String direction, String wall) {
 		switch (direction) {
 		case "N":
 			return "S";
