@@ -10,8 +10,8 @@ public class Sharks extends Agent{
 
 	int sharkBreedTime, sharkStarveTime;
 		
-	public Sharks(int x, int y, MyColor color, String direction, int sharkBreedTime, int sharkStarveTime){
-		super(x, y, color, direction);
+	public Sharks(int posX, int posY, MyColor color, String direction, int sharkBreedTime, int sharkStarveTime){
+		super(posX, posY, color, direction);
 		this.sharkBreedTime = sharkBreedTime;
 		this.sharkStarveTime = sharkStarveTime;
 	}

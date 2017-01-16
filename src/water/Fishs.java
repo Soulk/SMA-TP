@@ -12,8 +12,8 @@ public class Fishs extends Agent{
 
 	int fishBreedTime;
 	
-	public Fishs(int x, int y, MyColor color, String direction) {
-		super(x, y, color, direction);
+	public Fishs(int posX, int posY, MyColor color, String direction) {
+		super(posX, posY, color, direction);
 		this.fishBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("fishBreedTime"));
 	}
 	
