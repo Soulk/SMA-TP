@@ -55,6 +55,8 @@ public class View extends JPanel implements Observer{
 			return Color.BLUE;
 		} else if(agent.getColor().equals(MyColor.Vert)){
 			return Color.GREEN;
+		} else if(agent.getColor().equals(MyColor.Rose)) {
+			return Color.PINK;
 		} else {
 			return null;
 		}

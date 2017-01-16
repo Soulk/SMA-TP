@@ -29,7 +29,7 @@ public class Main {
 		
 		// Launch 
 		List<Agent> agents = new ArrayList<Agent>();
-		SMA sma = new SMA(agents, view);
+		SMA sma = new SMA(agents, view, "particules");
 		sma.run();
 		
 	}

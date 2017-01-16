@@ -1,6 +1,8 @@
 package core;
 
 import particules.Particules;
+import water.Fish;
+import water.Shark;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +13,7 @@ public class Environment extends Observable {
 	private static Agent[][] tab;
 	private static int tailleX;
 	private static int tailleY;
-	private int nbAgent;
+	private int nbAgent, nbShark, nbFish;
 	private int nbTicks;
 
 
@@ -21,6 +23,8 @@ public class Environment extends Observable {
 		tailleX = Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeX"));
 		tailleY = Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeY"));
 		nbAgent = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbParticles"));
+		nbFish = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbFish"));
+		nbShark = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbShark"));
         nbTicks = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbTicks"));
 
 	}
@@ -29,32 +33,52 @@ public class Environment extends Observable {
 	 * create all the agents
 	 * @return
 	 */
-	public List<Agent> initialisation() {
-		List<Agent> agents = new ArrayList<Agent>();
-		
-		for(int i = 0; i<nbAgent; i++){
-			// find a position
-			Random r = new Random();
-			int x = -1 , y = -1;
-			while(!isAGoodPosition(x, y)){
-				x = r.nextInt(tailleX );
-				y = r.nextInt(tailleY );
+	public List<Agent> initialisation(String game) {
+			List<Agent> agents = new ArrayList<Agent>();
+
+			for (int i = 0; i < nbAgent; i++) {
+				MyColor color = null;
+				Agent agent = null;
+				// find a position
+				Random r = new Random();
+				int x = -1, y = -1;
+				while (!isAGoodPosition(x, y)) {
+					x = r.nextInt(tailleX);
+					y = r.nextInt(tailleY);
+				}
+
+				// find a direction
+				String direction = Direction.dir[r.nextInt(Direction.dir.length)];
+
+				if (game.equals("particules")) {
+
+					//find a color
+					color = MyColor.randomColor();
+
+					// create the agent
+					agent = new Particules(x, y, color, direction);
+				} else if (game.equals("water")){
+
+					if(nbShark > 0) {
+						color = MyColor.Rose;
+						nbShark--;
+						agent = new Shark(x, y, color, direction);
+					} else if (nbFish >= 0){
+						color = MyColor.Vert;
+						nbFish--;
+						agent = new Fish(x, y, color, direction);
+					}
+
+				}
+
+				if(agent != null) {
+					agents.add(agent);
+					// put the agent in the core.Environment
+					tab[agent.getPosX()][agent.getPosY()] = agent;
+				}
 			}
-			
-			//find a color
-			MyColor color = MyColor.randomColor();
-			
-			// find a direction
-			String direction = Direction.dir[r.nextInt(Direction.dir.length)];
-			
-			// create the agent
-			Agent agent = new Particules(x, y, color, direction);
-			agents.add(agent);
-			
-			// put the agent in the core.Environment
-			tab[agent.getPosX()][agent.getPosY()] = agent;
-		}
-		return agents;
+			return agents;
+
 	}
 
 	/**
