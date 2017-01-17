@@ -148,6 +148,25 @@ public class Environment extends Observable {
         return pos;
     }
 
+    public int getNbSharks() {
+		int cpt = 0;
+		for(int i = 0; i < SMA.listAgent.size();i++) {
+			if(SMA.listAgent.get(i).getClass().equals(Shark.class)) {
+				cpt ++;
+			}
+		}
+		return cpt;
+	}
+	public int getNbFish() {
+		int cpt = 0;
+		for(int i = 0; i < SMA.listAgent.size();i++) {
+			if(SMA.listAgent.get(i).getClass().equals(Fish.class)) {
+				cpt ++;
+			}
+		}
+		return cpt;
+	}
+
 	public int getNbTicks(){
         return nbTicks;
     }

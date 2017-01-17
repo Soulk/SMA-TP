@@ -9,7 +9,6 @@ import java.util.Random;
 public class Shark extends AbstractWater{
 
 	int sharkBreedTime, sharkStarveTime;
-
     public Shark(int posX, int posY, MyColor color, String direction){
         super(posX, posY, color, direction);
         this.sharkBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("sharkBreedTime"));
@@ -111,6 +110,33 @@ public class Shark extends AbstractWater{
 					x = getPosX() + 1;
 					y = getPosY() + 1;
 					break;
+			}
+			// Outside the map
+			if(x >= Environment.getTailleX()){
+				x = 0;
+				if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
+					x = Environment.getTailleX() - 2;
+				}
+			}
+			if(x == -1){
+				x = Environment.getTailleX() - 1;
+				if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
+					x = 1;
+				}
+			}
+			if(x >= Environment.getTailleY()){
+				y = 0;
+				if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
+					y = Environment.getTailleY() - 2;
+
+                }
+			}
+			if(y == -1){
+				y = Environment.getTailleY() - 1;
+				if((PropertiesReader.getInstance().getProperties("torique").equals("false"))) {
+					y = 1;
+
+                }
 			}
 			if(x > -1 && x < Environment.getTailleX() && y > -1 && y < Environment.getTailleY())
 				if(Environment.getTab()[x][y] != null && Environment.getTab()[x][y].getClass().equals(Fish.class))

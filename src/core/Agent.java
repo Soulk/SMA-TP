@@ -242,4 +242,6 @@ public abstract class Agent {
 	}
 
 	public void setDirection(String d){ this.direction = d;}
+
+	public String getDirection() { return this.direction;}
 }

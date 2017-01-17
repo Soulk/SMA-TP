@@ -1,10 +1,6 @@
 package particules;
 
-import core.Agent;
-import core.PropertiesReader;
-import core.View;
-import core.Environment;
-import core.SMA;
+import core.*;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
@@ -17,6 +13,7 @@ public class Main {
 
 		Environment env = new Environment();
 		View view = new View(env);
+		InfoView info = new InfoView(env);
 		
 		// core.View
 		JFrame f = new JFrame();
@@ -29,7 +26,7 @@ public class Main {
 		
 		// Launch 
 		List<Agent> agents = new ArrayList<Agent>();
-		SMA sma = new SMA(agents, view, "particules");
+		SMA sma = new SMA(agents, view, info, "particules");
 		sma.run();
 		
 	}
