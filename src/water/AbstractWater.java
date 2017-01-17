@@ -9,14 +9,15 @@ import core.MyColor;
 public abstract class AbstractWater extends Agent {
 
     private boolean isBaby;
-
+    private int timeOfLife;
     public AbstractWater(int x, int y, MyColor color, String direction){
         super(x, y, color, direction);
         this.isBaby = true;
+        this.timeOfLife = 0;
     }
 
     public void decide(){
-        if(isBaby) {
+        if(isBaby && timeOfLife ==1) {
             if (this.getClass().equals(Shark.class)) {
                 this.setColor(MyColor.Rouge);
             } else {
@@ -24,6 +25,7 @@ public abstract class AbstractWater extends Agent {
             }
             isBaby = !isBaby;
         }
+        timeOfLife++;
     }
 
 }

@@ -240,4 +240,6 @@ public abstract class Agent {
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
+
+	public void setDirection(String d){ this.direction = d;}
 }

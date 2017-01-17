@@ -3,12 +3,13 @@ package core;
 import java.util.*;
 
 public class SMA extends Observable {
-	private List<Agent> listAgent;
+	public static List<Agent> listAgent;
 	private Environment environment;
 	private int nbTicks;
 
-	public SMA(List<Agent> listAgent, View view, String game) {
+	public SMA(List<Agent> listAgent, View view,InfoView infoView, String game) {
 		this.addObserver(view);
+		this.addObserver(infoView);
 
 		environment = new Environment();
 		this.listAgent = environment.initialisation(game);
@@ -31,18 +32,18 @@ public class SMA extends Observable {
 	public void run() {
 
 		for (int i = 0; i < environment.getNbTicks(); i++) {
-			for (Agent agent : listAgent) {
+			for(int j=0;j<listAgent.size();j++) {
 				if (PropertiesReader.getInstance().getProperties("scheduling").equals("ALEATOIRE")) {
 					Random r = new Random();
 					int bool = r.nextInt(1);
 					if (bool == 1)
-						agent.decide();
+						listAgent.get(j).decide();
 				} else {
-					agent.decide();
+					listAgent.get(j).decide();
 				}
 				if (PropertiesReader.getInstance().getProperties("trace").equals("true"))
 					System.out.println("");
-				listAgent = tabToList(Environment.getTab());
+				//listAgent = tabToList(Environment.getTab());
 			}
 				environment.update(listAgent);
 				environment.printTest();

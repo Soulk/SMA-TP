@@ -1,13 +1,11 @@
 package core;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
-import java.awt.Color;
 
 
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class View extends JPanel implements Observer{
 
@@ -26,6 +24,8 @@ public class View extends JPanel implements Observer{
 		
 		this.setSize(canvasSizeX,canvasSizeY);
         this.setPreferredSize(new Dimension(canvasSizeX,canvasSizeY));
+
+
 	}
 	
 	@Override

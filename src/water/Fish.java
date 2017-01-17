@@ -2,11 +2,7 @@ package water;
 
 import java.awt.Color;
 
-import core.Agent;
-import core.Direction;
-import core.Environment;
-import core.MyColor;
-import core.PropertiesReader;
+import core.*;
 
 public class Fish extends AbstractWater{
 
@@ -34,8 +30,12 @@ public class Fish extends AbstractWater{
 		if(fishBreedTime == 0 && madeAMove(oldX, oldY)){
 			Agent fish = new Fish(oldX, oldY, MyColor.Vert, Direction.getRandomDirection());
 			Environment.getTab()[oldX][oldY] = fish;
+			SMA.listAgent.add(fish);
+			fishBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("fishBreedTime"));
+		} else if(fishBreedTime < 0 ) {
 			fishBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("fishBreedTime"));
 		}
+		setDirection(Direction.getRandomDirection());
 	}
 
 }

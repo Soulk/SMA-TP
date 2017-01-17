@@ -1,10 +1,6 @@
 package water;
 
-import core.Agent;
-import core.Direction;
-import core.Environment;
-import core.MyColor;
-import core.PropertiesReader;
+import core.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +29,7 @@ public class Shark extends AbstractWater{
 				// eat the fish
 				Random r = new Random();
 				Fish toRemove = l_fish.get(r.nextInt(l_fish.size()));
+				SMA.listAgent.remove(toRemove);
 				Environment.getTab()[toRemove.getPosX()][toRemove.getPosY()] = null;
 
 				// move the shark
@@ -59,13 +56,16 @@ public class Shark extends AbstractWater{
 			if (sharkBreedTime == 0 && madeAMove(oldX, oldY)) {
 				Agent shark = new Shark(oldX, oldY, MyColor.Rose, Direction.getRandomDirection());
 				Environment.getTab()[oldX][oldY] = shark;
+				SMA.listAgent.add(shark);
 				sharkBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("sharkBreedTime"));
 			} else if(sharkBreedTime == 0){
 				sharkBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("sharkBreedTime"));
 			}
 		} else {
+			SMA.listAgent.remove(this);
 			Environment.getTab()[getPosX()][getPosY()] = null;
 		}
+		setDirection(Direction.getRandomDirection());
 
 	}
 	
