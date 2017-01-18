@@ -69,7 +69,9 @@ public class Environment extends Observable {
 						agent = new Fish(x, y, color, direction);
 					}
 
-				}
+				} else if (game.equals("hunter")){
+					//// TODO: 18/01/17  
+                }
 
 				if(agent != null) {
 					agents.add(agent);

@@ -32,7 +32,7 @@ public class Fish extends AbstractWater{
 			Environment.getTab()[oldX][oldY] = fish;
 			SMA.listAgent.add(fish);
 
-			printCSV("Fish", "Birth");
+			//printCSV("Fish", "Birth");
 
 			fishBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("fishBreedTime"));
 		} else if(fishBreedTime < 0 ) {
