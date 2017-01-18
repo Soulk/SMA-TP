@@ -1,6 +1,7 @@
 package water;
 
 import core.*;
+import utils.CSVManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,8 @@ public class Shark extends AbstractWater{
 				SMA.listAgent.remove(toRemove);
 				Environment.getTab()[toRemove.getPosX()][toRemove.getPosY()] = null;
 
+                printCSV("Fish", "Death");
+
 				// move the shark
 				Environment.getTab()[getPosX()][getPosY()] = null;
 
@@ -57,6 +60,10 @@ public class Shark extends AbstractWater{
 				Environment.getTab()[oldX][oldY] = shark;
 				SMA.listAgent.add(shark);
 				sharkBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("sharkBreedTime"));
+
+				//csv
+				printCSV("Shark", "Birth");
+
 			} else if(sharkBreedTime == 0){
 				sharkBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("sharkBreedTime"));
 			}

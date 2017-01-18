@@ -1,6 +1,10 @@
 package core;
 
+import utils.CSVManager;
+
 import java.util.*;
+
+import static java.lang.System.in;
 
 public class SMA extends Observable {
 	public static List<Agent> listAgent;
@@ -62,6 +66,11 @@ public class SMA extends Observable {
 					System.err.println("sleep problem");
 				e.printStackTrace();
 			}
+			if(Boolean.parseBoolean(PropertiesReader.getInstance().getProperties("csv")))
+				CSVManager.getInstance().writeCSV("TICK;"+environment.getNbSharks()+";"+environment.getNbFish()+"\n");
 		}
+
 	}
+
+
 }

@@ -31,6 +31,9 @@ public class Fish extends AbstractWater{
 			Agent fish = new Fish(oldX, oldY, MyColor.Vert, Direction.getRandomDirection());
 			Environment.getTab()[oldX][oldY] = fish;
 			SMA.listAgent.add(fish);
+
+			printCSV("Fish", "Birth");
+
 			fishBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("fishBreedTime"));
 		} else if(fishBreedTime < 0 ) {
 			fishBreedTime = Integer.parseInt(PropertiesReader.getInstance().getProperties("fishBreedTime"));

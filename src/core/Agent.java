@@ -1,5 +1,7 @@
 package core;
 
+import utils.CSVManager;
+
 import java.util.Random;
 
 public abstract class Agent {
@@ -27,17 +29,7 @@ public abstract class Agent {
 		int nbDir = r.nextInt(Direction.dir.length);
 		return Direction.dir[nbDir];
 	}
-	
-	public void updateTmp(int posXTmp, int posYTmp) {
-		this.posXTmp = posXTmp;
-		this.posYTmp = posYTmp;
-	}
-	
-	public void update(int posX, int posY) {
-		this.posX = posX;
-		this.posY = posY;
-	}
-	
+
 	public abstract void decide();
 	
 	public MyColor getColor() {
@@ -243,5 +235,8 @@ public abstract class Agent {
 
 	public void setDirection(String d){ this.direction = d;}
 
-	public String getDirection() { return this.direction;}
+	public void printCSV(String agent, String state){
+		if(Boolean.parseBoolean(PropertiesReader.getInstance().getProperties("csv")))
+			CSVManager.getInstance().writeCSV("AGENT;"+agent+";"+state+"\n");
+	}
 }
