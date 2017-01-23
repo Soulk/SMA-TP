@@ -1,6 +1,9 @@
 package Hunter;
 
 import core.Agent;
+import core.Environment;
+import core.MyColor;
+import core.PropertiesReader;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -11,10 +14,26 @@ import java.awt.event.KeyListener;
 public class Avatar extends Agent implements KeyListener {
 
     private int dirX = 0, dirY = 0;
+    
+    public Avatar(int posX, int posY, MyColor color, String direction){
+        super(posX, posY, color, direction);
+    }
 
-    public void decide(){
-        setPosX(getPosX() + dirX);
-        setPosY(getPosY() + dirY);
+	public void decide(){
+
+		if((dirX != 0 || dirY != 0)){
+	        setPosXTmp(getPosX() + dirX);
+	        setPosYTmp(getPosY() + dirY);
+				
+			checkBounds();	
+				        
+			Environment.getTab()[getPosX()][getPosY()] = null;
+		
+	        setPosX(getPosXTmp());
+	        setPosY(getPosYTmp());
+			
+	        Environment.getTab()[getPosX()][getPosY()] = this;
+		}
     }
 
     /**
@@ -22,38 +41,36 @@ public class Avatar extends Agent implements KeyListener {
      * @param e
      */
     public void keyPressed(KeyEvent e){
-
         switch(e.getKeyCode()){
             case KeyEvent.VK_LEFT:
-                dirX = -1;
-                break;
-            case KeyEvent.VK_RIGHT:
-                dirX = 1;
-                break;
-            case KeyEvent.VK_UP:
-                dirY = 1;
-                break;
-            case KeyEvent.VK_DOWN:
                 dirY = -1;
                 break;
+            case KeyEvent.VK_RIGHT:
+                dirY = 1;
+                break;
+            case KeyEvent.VK_UP:
+                dirX = -1;
+                break;
+            case KeyEvent.VK_DOWN:
+                dirX = 1;
+                break;
         }
-
     }
 
     public void keyReleased(KeyEvent e){
 
-        switch(e.getKeyCode()){
-            case KeyEvent.VK_LEFT:
-                dirX = 0;
+       switch(e.getKeyCode()){
+          	case KeyEvent.VK_LEFT:
+                dirY = 0;
                 break;
             case KeyEvent.VK_RIGHT:
-                dirX = 0;
+                dirY = 0;
                 break;
             case KeyEvent.VK_UP:
-                dirY = 0;
+                dirX = 0;
                 break;
             case KeyEvent.VK_DOWN:
-                dirY = 0;
+                dirX = 0;
                 break;
         }
 

@@ -4,6 +4,7 @@ import core.*;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 /**
@@ -15,7 +16,7 @@ public class Main {
         Environment env = new Environment();
         View view = new View(env);
         InfoView info = new InfoView(env);
-
+        
         // core.View
         JFrame f = new JFrame();
         f.setSize(Integer.parseInt(PropertiesReader.getInstance().getProperties("canvasSizeX")), Integer.parseInt(PropertiesReader.getInstance().getProperties("canvasSizeY")));
@@ -25,10 +26,12 @@ public class Main {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.setLocationByPlatform(true);
         f.setVisible(true);
+        
 
         // Launch
         java.util.List<Agent> agents = new ArrayList<Agent>();
         SMA sma = new SMA(agents, view, info, "hunter");
+        f.addKeyListener((KeyListener) sma.listAgent.get(0));
         sma.run();
     }
 

@@ -203,6 +203,22 @@ public abstract class Agent {
 		}
 	}
 
+	public int getPosXTmp() {
+		return posXTmp;
+	}
+
+	public void setPosXTmp(int posXTmp) {
+		this.posXTmp = posXTmp;
+	}
+
+	public int getPosYTmp() {
+		return posYTmp;
+	}
+
+	public void setPosYTmp(int posYTmp) {
+		this.posYTmp = posYTmp;
+	}
+
 	/**
 	 * use when two agents will collide
 	 * @param swapAgent

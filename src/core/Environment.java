@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
+import Hunter.Avatar;
+
 public class Environment extends Observable {
 	private static Agent[][] tab;
 	private static int tailleX;
@@ -70,7 +72,10 @@ public class Environment extends Observable {
 					}
 
 				} else if (game.equals("hunter")){
-					//// TODO: 18/01/17  
+					//// TODO: 18/01/17 
+					color = MyColor.randomColor();
+					
+					agent = new Avatar(x, y, color, null);
                 }
 
 				if(agent != null) {
