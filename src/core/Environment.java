@@ -16,7 +16,7 @@ public class Environment extends Observable {
 	private static Agent[][] tab;
 	private static int tailleX;
 	private static int tailleY;
-	private int nbAgent, nbShark, nbFish;
+	private int nbAgent, nbShark, nbFish, nbHunter, nbWalls, nbAvatar;
 	private int nbTicks;
 
 
@@ -29,6 +29,9 @@ public class Environment extends Observable {
 		nbFish = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbFish"));
 		nbShark = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbShark"));
         nbTicks = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbTicks"));
+        nbHunter = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbHunter"));
+        nbWalls = (int)((tailleX*tailleY)*Integer.parseInt(PropertiesReader.getInstance().getProperties("wallsPercent"))/100f);
+        nbAvatar = 1;
 
 	}
 
@@ -73,12 +76,16 @@ public class Environment extends Observable {
 					}
 
 				} else if (game.equals("hunter")){
-					//// TODO: 18/01/17 
-					color = MyColor.randomColor();
-					
-					agent = new Avatar(x, y, color, null);
-					Agent agent1 =(new Wall(0,0,MyColor.randomColor(),null));
-					tab[agent1.getPosX()][agent1.getPosY()] = agent1;
+					//// TODO: 18/01/17
+                    if(nbAvatar > 0) {
+                        color = MyColor.Rose;
+                        nbAvatar--;
+                        agent = new Avatar(x, y, color, null);
+                    } else if(nbWalls >= 0) {
+                        color = MyColor.Rouge;
+                        nbWalls--;
+                        agent = new Wall(x, y, color, null);
+                    }
                 }
 
 				if(agent != null) {

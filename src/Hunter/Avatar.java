@@ -24,16 +24,19 @@ public class Avatar extends Agent implements KeyListener {
         setPosYTmp(getPosY() + dirY);
 
         checkBounds();
+        if(interditDeplacement()) {
+            Environment.getTab()[getPosX()][getPosY()] = null;
 
-        Environment.getTab()[getPosX()][getPosY()] = null;
+            setPosX(getPosXTmp());
+            setPosY(getPosYTmp());
 
-        setPosX(getPosXTmp());
-        setPosY(getPosYTmp());
-
-        Environment.getTab()[getPosX()][getPosY()] = this;
+            Environment.getTab()[getPosX()][getPosY()] = this;
+        }
 
     }
-
+    public boolean interditDeplacement() {
+        return Environment.getTab()[getPosXTmp()][getPosYTmp()] == null;
+    }
     /**
      * Move the avatar with arrows
      * @param e
