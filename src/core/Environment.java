@@ -1,5 +1,6 @@
 package core;
 
+import Hunter.Wall;
 import particules.Particules;
 import water.Fish;
 import water.Shark;
@@ -76,6 +77,8 @@ public class Environment extends Observable {
 					color = MyColor.randomColor();
 					
 					agent = new Avatar(x, y, color, null);
+					Agent agent1 =(new Wall(0,0,MyColor.randomColor(),null));
+					tab[agent1.getPosX()][agent1.getPosY()] = agent1;
                 }
 
 				if(agent != null) {

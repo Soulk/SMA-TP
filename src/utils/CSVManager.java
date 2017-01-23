@@ -11,8 +11,8 @@ import java.util.Properties;
 public class CSVManager {
 
     private static CSVManager instance;
-    static OutputStream output;
-    public PrintStream printStream;
+    private OutputStream output;
+    private PrintStream printStream;
 
     public CSVManager() throws FileNotFoundException {
         output = new FileOutputStream("stat.csv");
@@ -34,4 +34,21 @@ public class CSVManager {
         printStream.print(line);
     }
 
+    public void stopRecord(){
+        try {
+            output.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void printDeplacement(String type,int posX, int posY) {
+        System.out.println();
+    }
+    public void printNaissance(String type) {
+        System.out.println();
+    }
+    public void printDeces(String type, int age) {
+        System.out.println();
+    }
 }

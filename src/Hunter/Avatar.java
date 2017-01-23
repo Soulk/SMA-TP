@@ -20,20 +20,18 @@ public class Avatar extends Agent implements KeyListener {
     }
 
 	public void decide(){
+        setPosXTmp(getPosX() + dirX);
+        setPosYTmp(getPosY() + dirY);
 
-		if((dirX != 0 || dirY != 0)){
-	        setPosXTmp(getPosX() + dirX);
-	        setPosYTmp(getPosY() + dirY);
-				
-			checkBounds();	
-				        
-			Environment.getTab()[getPosX()][getPosY()] = null;
-		
-	        setPosX(getPosXTmp());
-	        setPosY(getPosYTmp());
-			
-	        Environment.getTab()[getPosX()][getPosY()] = this;
-		}
+        checkBounds();
+
+        Environment.getTab()[getPosX()][getPosY()] = null;
+
+        setPosX(getPosXTmp());
+        setPosY(getPosYTmp());
+
+        Environment.getTab()[getPosX()][getPosY()] = this;
+
     }
 
     /**
