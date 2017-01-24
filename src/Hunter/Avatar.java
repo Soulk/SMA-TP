@@ -52,7 +52,8 @@ public class Avatar extends Agent implements KeyListener {
             if(getPosX() == Environment.getTailleX()-1 && dirX == 1) return false;
             if(getPosY() == 0 && dirY == -1) return false;
             if(getPosY() == Environment.getTailleY()-1 && dirY == 1) return false;
-        }
+        } else if(Environment.getTab()[getPosXTmp()][getPosYTmp()] instanceof Hunter)
+        	return false;
         return Environment.getTab()[getPosXTmp()][getPosYTmp()] == null;
     }
     /**
@@ -126,7 +127,21 @@ public class Avatar extends Agent implements KeyListener {
                 int newX = e.getX() + newElement.getX();
                 int newY = e.getY() + newElement.getY();
 
-
+                if(PropertiesReader.getInstance().getProperties("torique").equals("true")) {
+                	if(newX == -1){
+                		newX = Environment.getTailleX() - 1;
+                	} 
+                	if(newY == -1){
+                		newY = Environment.getTailleY() - 1;
+                	} 
+                	if(newY == Environment.getTailleY()){
+                		newY = 0;
+                	}
+                	if(newX == Environment.getTailleX() ){
+                		newX = 0;
+                	}
+                }
+                
                 if(newX > -1 && newX < Environment.getTailleX() && newY > -1 && newY < Environment.getTailleY()) {
                 	
 	                    if (tabDij[newX][newY] == -1) {
@@ -134,8 +149,8 @@ public class Avatar extends Agent implements KeyListener {
 	                        newElement.setY(newY);
 	                        l_Neighbour.add(newElement);
 	                    }
-                	
                 }
+                
             }
         }
 
