@@ -128,11 +128,13 @@ public class Avatar extends Agent implements KeyListener {
 
 
                 if(newX > -1 && newX < Environment.getTailleX() && newY > -1 && newY < Environment.getTailleY()) {
-                    if (tabDij[newX][newY] == -1) {
-                        newElement.setX(newX);
-                        newElement.setY(newY);
-                        l_Neighbour.add(newElement);
-                    }
+                	
+	                    if (tabDij[newX][newY] == -1) {
+	                        newElement.setX(newX);
+	                        newElement.setY(newY);
+	                        l_Neighbour.add(newElement);
+	                    }
+                	
                 }
             }
         }
@@ -143,7 +145,11 @@ public class Avatar extends Agent implements KeyListener {
     public void resetTab(){
         for (int i = 0; i<tabDij.length; i++){
             for(int j = 0; j<tabDij[i].length; j++)
-                tabDij[i][j] = -1;
+            	if((Environment.getTab()[i][j] instanceof Wall)){
+            		tabDij[i][j] = Integer.MAX_VALUE;
+            	} else {
+            		tabDij[i][j] = -1;
+            	}
         }
     }
 

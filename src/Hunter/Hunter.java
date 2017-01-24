@@ -25,16 +25,20 @@ public class Hunter extends Agent {
                     tmp.setPosYTmp(getPosY() + element.getY());
 
                     tmp.checkBounds();
-
-                    if (dij[tmp.getPosXTmp()][tmp.getPosYTmp()] < currentValue) {         	
-                    	Environment.getTab()[getPosX()][getPosY()] = null;
-
-                    	setPosX(tmp.getPosXTmp());
-                    	setPosY(tmp.getPosYTmp());
-
-                		Environment.getTab()[getPosX()][getPosY()] = this;
-                		
-                		break;
+                    if(!(Environment.getTab()[tmp.getPosXTmp()][tmp.getPosYTmp()] instanceof Hunter)){
+	                    if (dij[tmp.getPosXTmp()][tmp.getPosYTmp()] < currentValue) {         	
+	                    	Environment.getTab()[getPosX()][getPosY()] = null;
+	
+	                    	setPosX(tmp.getPosXTmp());
+	                    	setPosY(tmp.getPosYTmp());
+	
+	                		Environment.getTab()[getPosX()][getPosY()] = this;
+	                		
+	                		if(Environment.getTab()[getPosX()][getPosY()] instanceof Avatar)
+	                			// stop the game
+	                		
+	                		break;
+	                    }
                     }
                 }
             }
