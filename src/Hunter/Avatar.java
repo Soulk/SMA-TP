@@ -12,7 +12,7 @@ import java.util.List;
  * Created by decottignies on 18/01/17.
  */
 public class Avatar extends Agent implements KeyListener {
-    private int [][] tabDij;
+    public static int [][] tabDij;
 
     private int dirX = 0, dirY = 0;
     public static int speedAvatar;
