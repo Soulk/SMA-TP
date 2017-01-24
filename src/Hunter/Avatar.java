@@ -14,7 +14,8 @@ import java.util.List;
 public class Avatar extends Agent implements KeyListener {
     private int [][] tabDij;
 
-    private int dirX = 0, dirY = 0, speedAvatar;
+    private int dirX = 0, dirY = 0;
+    public static int speedAvatar;
 
     public Avatar(int posX, int posY, MyColor color, String direction){
         super(posX, posY, color, direction);
@@ -25,7 +26,7 @@ public class Avatar extends Agent implements KeyListener {
     }
 
 	public void decide(){
-        if(SMA.nbTicks % Integer.parseInt(PropertiesReader.getInstance().getProperties("speedAvatar"))== 0) {
+        if(SMA.nbTicks % speedAvatar== 0) {
             resetTab();
             setPosXTmp(getPosX() + dirX);
             setPosYTmp(getPosY() + dirY);
@@ -46,6 +47,12 @@ public class Avatar extends Agent implements KeyListener {
 
     }
     public boolean interditDeplacement() {
+        if(PropertiesReader.getInstance().getProperties("torique").equals("false")) {
+            if(getPosX() == 0 && dirX == -1) return false;
+            if(getPosX() == Environment.getTailleX()-1 && dirX == 1) return false;
+            if(getPosY() == 0 && dirY == -1) return false;
+            if(getPosY() == Environment.getTailleY()-1 && dirY == 1) return false;
+        }
         return Environment.getTab()[getPosXTmp()][getPosYTmp()] == null;
     }
     /**
