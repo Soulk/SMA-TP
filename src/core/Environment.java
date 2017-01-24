@@ -1,5 +1,6 @@
 package core;
 
+import Hunter.Hunter;
 import Hunter.Wall;
 import particules.Particules;
 import water.Fish;
@@ -76,7 +77,6 @@ public class Environment extends Observable {
 					}
 
 				} else if (game.equals("hunter")){
-					//// TODO: 18/01/17
                     if(nbAvatar > 0) {
                         color = MyColor.Rose;
                         nbAvatar--;
@@ -85,7 +85,12 @@ public class Environment extends Observable {
                         color = MyColor.Rouge;
                         nbWalls--;
                         agent = new Wall(x, y, color, null);
-                    }
+                    } else if(nbHunter > 0){
+						color = MyColor.Jaune;
+						nbHunter--;
+						agent = new Hunter(x, y, color, null);
+					}
+
                 }
 
 				if(agent != null) {
@@ -187,4 +192,15 @@ public class Environment extends Observable {
 	public int getNbTicks(){
         return nbTicks;
     }
+
+    public static void sendDijktra(int [][] dij){
+		for (int i = 0; i<tab.length; i++) {
+			for (int j = 0; j < tab[i].length; j++)
+				if (tab[i][j] instanceof Hunter) {
+					Hunter h = (Hunter) tab[i][j];
+					h.setDij(dij);
+				}
+		}
+	}
+
 }

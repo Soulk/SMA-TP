@@ -49,4 +49,27 @@ public class  Direction {
 			return null;
 		}
 	}
+
+	public static DijsktraElement getDirection(String direction){
+		switch (direction) {
+			case "N":
+				return new DijsktraElement(-1, 0);
+			case "S":
+				return new DijsktraElement(1, 0);
+			case "W":
+				return new DijsktraElement(0, -1);
+			case "E":
+				return new DijsktraElement(0, 1);
+			case "NW":
+				return new DijsktraElement(-1, -1);
+			case "NE":
+				return new DijsktraElement(-1, 1);
+			case "SW":
+				return new DijsktraElement(1, -1);
+			case "SE":
+				return new DijsktraElement(1, 1);
+			default:
+				return null;
+		}
+	}
 }

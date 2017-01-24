@@ -34,7 +34,7 @@ public class Main {
         SMA sma = new SMA(agents, view, info, "hunter");
 
         for(int i=0; i<sma.listAgent.size();i++) {
-            f.addKeyListener((KeyListener) sma.listAgent.get(i));
+//            f.addKeyListener((KeyListener) sma.listAgent.get(i));
         }
         f.addKeyListener((KeyListener) changer );
         sma.run();

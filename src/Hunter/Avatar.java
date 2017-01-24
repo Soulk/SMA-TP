@@ -4,21 +4,29 @@ import core.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.image.DirectColorModel;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by decottignies on 18/01/17.
  */
 public class Avatar extends Agent implements KeyListener {
+    private int [][] tabDij;
 
     private int dirX = 0, dirY = 0, speedAvatar;
-    
+
     public Avatar(int posX, int posY, MyColor color, String direction){
         super(posX, posY, color, direction);
+        this.tabDij = new int [Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeX"))]
+                              [Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeY"))];
+        resetTab();
         speedAvatar = Integer.parseInt(PropertiesReader.getInstance().getProperties("speedAvatar"));
     }
 
 	public void decide(){
-        if(SMA.nbTicks % speedAvatar == 0) {
+        if(SMA.nbTicks % Integer.parseInt(PropertiesReader.getInstance().getProperties("speedAvatar"))== 0) {
+            resetTab();
             setPosXTmp(getPosX() + dirX);
             setPosYTmp(getPosY() + dirY);
 
@@ -31,7 +39,10 @@ public class Avatar extends Agent implements KeyListener {
 
                 Environment.getTab()[getPosX()][getPosY()] = this;
             }
+            doDijkstra();
+            sendDijstraToHunter();
         }
+
 
     }
     public boolean interditDeplacement() {
@@ -81,6 +92,56 @@ public class Avatar extends Agent implements KeyListener {
     }
 
     public void keyTyped(KeyEvent e){
+    }
+
+    public void doDijkstra(){
+        DijsktraElement element = new DijsktraElement(getPosX(), getPosY());
+        int distance = 1;
+        tabDij[element.getX()][element.getY()] = 0;
+        List<DijsktraElement> l = new ArrayList<DijsktraElement>();
+        l.add(element);
+
+        while(!getNeighbour(l).isEmpty()){
+            l = getNeighbour(l);
+            for (DijsktraElement e: l) {
+                tabDij[e.getX()][e.getY()] = distance;
+            }
+            distance++;
+        }
+    }
+
+    public List<DijsktraElement> getNeighbour(List<DijsktraElement> l_element){
+        List<DijsktraElement> l_Neighbour = new ArrayList<DijsktraElement>();
+
+        for (DijsktraElement e:l_element) {
+            for (int i = 0; i < Direction.dir.length; i++) {
+                DijsktraElement newElement = Direction.getDirection(Direction.dir[i]);
+                int newX = e.getX() + newElement.getX();
+                int newY = e.getY() + newElement.getY();
+
+
+                if(newX > -1 && newX < Environment.getTailleX() && newY > -1 && newY < Environment.getTailleY()) {
+                    if (tabDij[newX][newY] == -1) {
+                        newElement.setX(newX);
+                        newElement.setY(newY);
+                        l_Neighbour.add(newElement);
+                    }
+                }
+            }
+        }
+
+        return l_Neighbour;
+    }
+
+    public void resetTab(){
+        for (int i = 0; i<tabDij.length; i++){
+            for(int j = 0; j<tabDij[i].length; j++)
+                tabDij[i][j] = -1;
+        }
+    }
+
+    public void sendDijstraToHunter(){
+        Environment.sendDijktra(tabDij);
     }
 
 }
