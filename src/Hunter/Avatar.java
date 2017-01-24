@@ -1,9 +1,6 @@
 package Hunter;
 
-import core.Agent;
-import core.Environment;
-import core.MyColor;
-import core.PropertiesReader;
+import core.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -20,17 +17,19 @@ public class Avatar extends Agent implements KeyListener {
     }
 
 	public void decide(){
-        setPosXTmp(getPosX() + dirX);
-        setPosYTmp(getPosY() + dirY);
+        if(SMA.nbTicks % Integer.parseInt(PropertiesReader.getInstance().getProperties("speedAvatar"))== 0) {
+            setPosXTmp(getPosX() + dirX);
+            setPosYTmp(getPosY() + dirY);
 
-        checkBounds();
-        if(interditDeplacement()) {
-            Environment.getTab()[getPosX()][getPosY()] = null;
+            checkBounds();
+            if (interditDeplacement()) {
+                Environment.getTab()[getPosX()][getPosY()] = null;
 
-            setPosX(getPosXTmp());
-            setPosY(getPosYTmp());
+                setPosX(getPosXTmp());
+                setPosY(getPosYTmp());
 
-            Environment.getTab()[getPosX()][getPosY()] = this;
+                Environment.getTab()[getPosX()][getPosY()] = this;
+            }
         }
 
     }

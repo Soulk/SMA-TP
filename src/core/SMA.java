@@ -9,7 +9,7 @@ import static java.lang.System.in;
 public class SMA extends Observable {
 	public static List<Agent> listAgent;
 	private Environment environment;
-	private int nbTicks;
+	public static int nbTicks;
 
 	public SMA(List<Agent> listAgent, View view,InfoView infoView, String game) {
 		this.addObserver(view);
@@ -57,6 +57,7 @@ public class SMA extends Observable {
 				Collections.shuffle(listAgent);
 				notifyObservers();
 				setChanged();
+			nbTicks++;
 
 
 			try {
@@ -72,6 +73,4 @@ public class SMA extends Observable {
 		if(Boolean.parseBoolean(PropertiesReader.getInstance().getProperties("csv")))CSVManager.getInstance().stopRecord();
 
 	}
-
-
 }
