@@ -1,9 +1,6 @@
 package Hunter;
 
 import core.*;
-import core.Agent;
-import core.PropertiesReader;
-import core.SMA;
 
 /**
  * Created by decottignies on 18/01/17.
@@ -23,18 +20,21 @@ public class Hunter extends Agent {
                 int currentValue = dij[getPosX()][getPosY()];
                 for (int i = 0; i < Direction.dir.length; i++) {
                     DijsktraElement element = Direction.getDirection(Direction.dir[i]);
-                    setPosYTmp(getPosX() + element.getX());
-                    setPosXTmp(getPosY() + element.getY());
+                    Hunter tmp = this;
+                    tmp.setPosXTmp(getPosX() + element.getX());
+                    tmp.setPosYTmp(getPosY() + element.getY());
 
-                    checkBounds();
+                    tmp.checkBounds();
 
-                    if (dij[getPosX()][getPosY()] < currentValue) {
-                        Environment.getTab()[getPosX()][getPosY()] = null;
+                    if (dij[tmp.getPosXTmp()][tmp.getPosYTmp()] < currentValue) {         	
+                    	Environment.getTab()[getPosX()][getPosY()] = null;
 
-                        setPosX(getPosX());
-                        setPosY(getPosY());
+                    	setPosX(tmp.getPosXTmp());
+                    	setPosY(tmp.getPosYTmp());
 
-                        Environment.getTab()[getPosX()][getPosY()] = this;
+                		Environment.getTab()[getPosX()][getPosY()] = this;
+                		
+                		break;
                     }
                 }
             }

@@ -148,7 +148,19 @@ public class Avatar extends Agent implements KeyListener {
     }
 
     public void sendDijstraToHunter(){
+    	printDij();
         Environment.sendDijktra(tabDij);
+    }
+    
+    public void printDij(){
+    	System.out.println("-----------------");
+    	for (int i = 0; i < tabDij.length; i++) {
+			for (int j = 0; j < tabDij[i].length; j++) {
+				System.out.print(tabDij[i][j]);
+			}
+			System.out.println();
+		}
+    	System.out.println("-----------------");
     }
 
 }
