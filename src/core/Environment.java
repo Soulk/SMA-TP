@@ -81,7 +81,7 @@ public class Environment extends Observable {
                         color = MyColor.Rose;
                         nbAvatar--;
                         agent = new Avatar(x, y, color, null);
-                    } else if(nbWalls >= 0) {
+                    } else if(nbWalls > 0) {
                         color = MyColor.Rouge;
                         nbWalls--;
                         agent = new Wall(x, y, color, null);

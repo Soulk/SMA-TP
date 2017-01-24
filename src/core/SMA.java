@@ -9,12 +9,14 @@ import static java.lang.System.in;
 public class SMA extends Observable {
 	public static List<Agent> listAgent;
 	private Environment environment;
-	public static int nbTicks;
+	public static int nbTicks,delay;
+    public static boolean stopped;
 
 	public SMA(List<Agent> listAgent, View view,InfoView infoView, String game) {
 		this.addObserver(view);
 		this.addObserver(infoView);
-
+        delay = Integer.parseInt(PropertiesReader.getInstance().getProperties("delay"));
+        stopped = false;
 		environment = new Environment();
 		this.listAgent = environment.initialisation(game);
 		notifyObservers();
@@ -34,7 +36,6 @@ public class SMA extends Observable {
 	 * run the simulation
 	 */
 	public void run() {
-
 		for (int i = 0; i < environment.getNbTicks(); i++) {
 			for(int j=0;j<listAgent.size();j++) {
 				if (PropertiesReader.getInstance().getProperties("scheduling").equals("ALEATOIRE")) {
@@ -61,12 +62,15 @@ public class SMA extends Observable {
 
 
 			try {
-				Thread.sleep(Integer.parseInt(PropertiesReader.getInstance().getProperties("delay")));
+				Thread.sleep(delay);
 			} catch (InterruptedException e) {
 				if (PropertiesReader.getInstance().getProperties("trace").equals("true"))
 					System.err.println("sleep problem");
 				e.printStackTrace();
 			}
+            while(stopped) {
+
+            }
 			if(Boolean.parseBoolean(PropertiesReader.getInstance().getProperties("csv")))
 				CSVManager.getInstance().writeCSV("TICK;"+environment.getNbSharks()+";"+environment.getNbFish()+"\n");
 		}

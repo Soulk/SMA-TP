@@ -14,6 +14,7 @@ public class Main {
 
     public static void main(String[] args) {
         Environment env = new Environment();
+        GameChanger changer = new GameChanger();
         View view = new View(env);
         InfoView info = new InfoView(env);
         
@@ -31,7 +32,11 @@ public class Main {
         // Launch
         java.util.List<Agent> agents = new ArrayList<Agent>();
         SMA sma = new SMA(agents, view, info, "hunter");
-        f.addKeyListener((KeyListener) sma.listAgent.get(0));
+
+        for(int i=0; i<sma.listAgent.size();i++) {
+            f.addKeyListener((KeyListener) sma.listAgent.get(i));
+        }
+        f.addKeyListener((KeyListener) changer );
         sma.run();
     }
 
