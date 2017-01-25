@@ -109,7 +109,7 @@ public class Environment extends Observable {
 	 * @param y
 	 * @return
 	 */
-	public Boolean isAGoodPosition(int x, int y){
+	public static Boolean isAGoodPosition(int x, int y){
 		if(x < 0 || y < 0 || x > tailleX || y > tailleY)
 			return false;
 		else if (tab[x][y] != null )

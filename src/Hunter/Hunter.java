@@ -2,6 +2,8 @@ package Hunter;
 
 import core.*;
 
+import javax.swing.*;
+
 /**
  * Created by decottignies on 18/01/17.
  */
@@ -35,11 +37,18 @@ public class Hunter extends Agent{
 	
 	                		Environment.getTab()[getPosX()][getPosY()] = this;
 	                		
-	                		if(dij[getPosX()][getPosY()] == 0)
-	                			System.exit(0);
-	                		
-	                		i = Direction.dir.length;
-	                    } 
+	                		if(dij[getPosX()][getPosY()] == 0) {
+                                JOptionPane.showMessageDialog(null, "GAME OVER");
+                                while (true) {
+                                    try {
+                                        Thread.sleep(Long.MAX_VALUE);
+                                    } catch (InterruptedException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+	                		i = Direction.dir.length+1;
+	                    }
                     }
                 }
             }

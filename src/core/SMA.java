@@ -1,5 +1,7 @@
 package core;
 
+import Hunter.Defender;
+import particules.Particules;
 import utils.CSVManager;
 
 import java.util.*;
@@ -31,12 +33,34 @@ public class SMA extends Observable {
 		}
 		return lst;
 	}
+	public void addAgentInRun() {
+		MyColor color = null;
+		Agent agent = null;
+		// find a position
+		Random r = new Random();
+		int x = -1, y = -1;
+		while (!Environment.isAGoodPosition(x, y)) {
+			x = r.nextInt(Environment.getTailleX());
+			y = r.nextInt(Environment.getTailleY());
+		}
+		color = MyColor.Bleu;
 
+		// create the agent
+		agent = new Defender(x, y, color, null);
+		listAgent.add(agent);
+		// put the agent in the core.Environment
+		Environment.getTab()[agent.getPosX()][agent.getPosY()] = agent;
+	}
 	/**
 	 * run the simulation
 	 */
 	public void run() {
 		for (int i = 0; i < environment.getNbTicks(); i++) {
+			if(PropertiesReader.getInstance().getProperties("game").equals("hunter")) {
+				Random r = new Random();
+				int rand = r.nextInt(15);
+				if(rand == 1)  addAgentInRun();
+			}
 			for(int j=0;j<listAgent.size();j++) {
 				if (PropertiesReader.getInstance().getProperties("scheduling").equals("ALEATOIRE")) {
 					Random r = new Random();

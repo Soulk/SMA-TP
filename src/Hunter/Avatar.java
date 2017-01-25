@@ -2,11 +2,13 @@ package Hunter;
 
 import core.*;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.DirectColorModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by decottignies on 18/01/17.
@@ -14,7 +16,7 @@ import java.util.List;
 public class Avatar extends Agent implements KeyListener {
     public static int [][] tabDij;
 
-    private int dirX = 0, dirY = 0;
+    private int dirX = 0, dirY = 0, nbDefender =0;
     public static int speedAvatar;
 
     public Avatar(int posX, int posY, MyColor color, String direction){
@@ -37,7 +39,39 @@ public class Avatar extends Agent implements KeyListener {
 
                 setPosX(getPosXTmp());
                 setPosY(getPosYTmp());
+                if(Environment.getTab()[getPosX()][getPosY()] instanceof Defender) {
+                    SMA.listAgent.remove(Environment.getTab()[getPosX()][getPosY()]);
+                    nbDefender++;
+                    if(nbDefender==4) {
+                        MyColor color = null;
+                        Agent agent = null;
+                        // find a position
+                        Random r = new Random();
+                        int x = -1, y = -1;
+                        while (!Environment.isAGoodPosition(x, y)) {
+                            x = r.nextInt(Environment.getTailleX());
+                            y = r.nextInt(Environment.getTailleY());
+                        }
+                        color = MyColor.Vert;
 
+                        // create the agent
+                        agent = new Winner(x, y, color, null);
+                        SMA.listAgent.add(agent);
+                        // put the agent in the core.Environment
+                        Environment.getTab()[agent.getPosX()][agent.getPosY()] = agent;
+                        SMA.listAgent.add(new Winner(x,y,color,null));
+                    }
+                }
+                if(Environment.getTab()[getPosX()][getPosY()] instanceof Winner) {
+                    JOptionPane.showMessageDialog(null, "GAGNE");
+                    while (true) {
+                        try {
+                            Thread.sleep(Long.MAX_VALUE);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
                 Environment.getTab()[getPosX()][getPosY()] = this;
             }
             doDijkstra();
@@ -54,7 +88,7 @@ public class Avatar extends Agent implements KeyListener {
             if(getPosY() == Environment.getTailleY()-1 && dirY == 1) return false;
         } else if(Environment.getTab()[getPosXTmp()][getPosYTmp()] instanceof Hunter)
         	return false;
-        return Environment.getTab()[getPosXTmp()][getPosYTmp()] == null;
+        return Environment.getTab()[getPosXTmp()][getPosYTmp()] == null || Environment.getTab()[getPosXTmp()][getPosYTmp()] instanceof Defender || Environment.getTab()[getPosXTmp()][getPosYTmp()] instanceof Winner;
     }
     /**
      * Move the avatar with arrows
@@ -160,7 +194,7 @@ public class Avatar extends Agent implements KeyListener {
     public void resetTab(){
         for (int i = 0; i<tabDij.length; i++){
             for(int j = 0; j<tabDij[i].length; j++)
-            	if((Environment.getTab()[i][j] instanceof Wall)){
+            	if((Environment.getTab()[i][j] instanceof Wall || Environment.getTab()[i][j] instanceof Defender)){
             		tabDij[i][j] = Integer.MAX_VALUE;
             	} else {
             		tabDij[i][j] = -1;
