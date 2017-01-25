@@ -1,7 +1,6 @@
 package core;
 
 import Hunter.Defender;
-import particules.Particules;
 import utils.CSVManager;
 
 import java.util.*;
