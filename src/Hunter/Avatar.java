@@ -169,7 +169,7 @@ public class Avatar extends Agent implements KeyListener {
     }
 
     public void sendDijstraToHunter(){
-    	printDij();
+    	//printDij();
         Environment.sendDijktra(tabDij);
     }
     

@@ -35,11 +35,11 @@ public class Hunter extends Agent{
 	
 	                		Environment.getTab()[getPosX()][getPosY()] = this;
 	                		
-	                		if(Environment.getTab()[getPosX()][getPosY()] instanceof Avatar)
-	                			// stop the game
+	                		if(dij[getPosX()][getPosY()] == 0)
+	                			System.exit(0);
 	                		
-	                		break;
-	                    }
+	                		i = Direction.dir.length;
+	                    } 
                     }
                 }
             }
