@@ -1,13 +1,13 @@
 package core;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
+import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
-import java.awt.Color;
 
 
-import javax.swing.JPanel;
+import javax.swing.*;
+
+import Hunter.Avatar;
 
 public class View extends JPanel implements Observer{
 
@@ -26,6 +26,8 @@ public class View extends JPanel implements Observer{
 		
 		this.setSize(canvasSizeX,canvasSizeY);
         this.setPreferredSize(new Dimension(canvasSizeX,canvasSizeY));
+
+
 	}
 	
 	@Override
@@ -34,10 +36,12 @@ public class View extends JPanel implements Observer{
 		for(int i = 0; i<Environment.getTailleX(); i++){
 			for(int j = 0; j<Environment.getTailleY(); j++){
 				if(Environment.getTab()[i][j] != null){
+//					g.drawString(""+Avatar.tabDij[i][j], 50 * j + 10 , 50 * i + 10);
 					g.setColor(getColor(Environment.getTab()[i][j]));
 					g.fillRect(j * boxSize, i * boxSize, boxSize, boxSize);
 				} else {
 					if(PropertiesReader.getInstance().getProperties("grid").equals("true")) {
+//						g.drawString(""+Avatar.tabDij[i][j], 50 * j + 10, 50 * i +10);
 						g.setColor(Color.GRAY);
 						g.drawRect(j * boxSize, i * boxSize, boxSize - 1, boxSize - 1);
 					}
@@ -55,6 +59,8 @@ public class View extends JPanel implements Observer{
 			return Color.BLUE;
 		} else if(agent.getColor().equals(MyColor.Vert)){
 			return Color.GREEN;
+		} else if(agent.getColor().equals(MyColor.Rose)) {
+			return Color.PINK;
 		} else {
 			return null;
 		}

@@ -1,14 +1,20 @@
 package core;
 
+import utils.CSVManager;
+
 import java.util.Random;
 
-public class Agent {
+public abstract class Agent {
 	
 	private int posX,posY;
 	private int posXTmp, posYTmp;
 	private MyColor color;
 	private String direction;
 	private int cptCheckAround;
+
+	public Agent(){
+
+	}
 	
 	public Agent(int posX,int posY, MyColor color, String direction) {
 		this.color = color;
@@ -23,21 +29,8 @@ public class Agent {
 		int nbDir = r.nextInt(Direction.dir.length);
 		return Direction.dir[nbDir];
 	}
-	
-	public void updateTmp(int posXTmp, int posYTmp) {
-		this.posXTmp = posXTmp;
-		this.posYTmp = posYTmp;
-	}
-	
-	public void update(int posX, int posY) {
-		this.posX = posX;
-		this.posY = posY;
-	}
-	
-	public void decide(){
-		findNewPosition();
-		makeAction();
-	}
+
+	public abstract void decide();
 	
 	public MyColor getColor() {
 		return color;
@@ -86,6 +79,16 @@ public class Agent {
 		}
 	}
 
+	/**
+	 * check if the agent made a move or not, during the click
+	 * @return
+	 */
+	public Boolean madeAMove(int oldX, int oldY){
+		if(posX != oldX || posY != oldY)
+			return true;
+		return false;
+	}
+	
 	public void makeAction(){
 		checkBounds();
 		// On an existent core.Agent
@@ -200,6 +203,22 @@ public class Agent {
 		}
 	}
 
+	public int getPosXTmp() {
+		return posXTmp;
+	}
+
+	public void setPosXTmp(int posXTmp) {
+		this.posXTmp = posXTmp;
+	}
+
+	public int getPosYTmp() {
+		return posYTmp;
+	}
+
+	public void setPosYTmp(int posYTmp) {
+		this.posYTmp = posYTmp;
+	}
+
 	/**
 	 * use when two agents will collide
 	 * @param swapAgent
@@ -228,5 +247,12 @@ public class Agent {
 
 	public void setPosY(int posY) {
 		this.posY = posY;
+	}
+
+	public void setDirection(String d){ this.direction = d;}
+
+	public void printCSV(String agent, String state){
+		if(Boolean.parseBoolean(PropertiesReader.getInstance().getProperties("csv")))
+			CSVManager.getInstance().writeCSV("AGENT;"+agent+";"+state+"\n");
 	}
 }

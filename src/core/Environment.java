@@ -1,15 +1,23 @@
 package core;
 
+import Hunter.Hunter;
+import Hunter.Wall;
+import particules.Particules;
+import water.Fish;
+import water.Shark;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
 
+import Hunter.Avatar;
+
 public class Environment extends Observable {
 	private static Agent[][] tab;
 	private static int tailleX;
 	private static int tailleY;
-	private int nbAgent;
+	private int nbAgent, nbShark, nbFish, nbHunter, nbWalls, nbAvatar;
 	private int nbTicks;
 
 
@@ -19,7 +27,12 @@ public class Environment extends Observable {
 		tailleX = Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeX"));
 		tailleY = Integer.parseInt(PropertiesReader.getInstance().getProperties("gridSizeY"));
 		nbAgent = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbParticles"));
+		nbFish = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbFish"));
+		nbShark = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbShark"));
         nbTicks = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbTicks"));
+        nbHunter = Integer.parseInt(PropertiesReader.getInstance().getProperties("nbHunter"));
+        nbWalls = (int)((tailleX*tailleY)*Integer.parseInt(PropertiesReader.getInstance().getProperties("wallsPercent"))/100f);
+        nbAvatar = 1;
 
 	}
 
@@ -27,32 +40,67 @@ public class Environment extends Observable {
 	 * create all the agents
 	 * @return
 	 */
-	public List<Agent> initialisation() {
-		List<Agent> agents = new ArrayList<Agent>();
-		
-		for(int i = 0; i<nbAgent; i++){
-			// find a position
-			Random r = new Random();
-			int x = -1 , y = -1;
-			while(!isAGoodPosition(x, y)){
-				x = r.nextInt(tailleX );
-				y = r.nextInt(tailleY );
+	public List<Agent> initialisation(String game) {
+			List<Agent> agents = new ArrayList<Agent>();
+
+			for (int i = 0; i < nbAgent; i++) {
+				MyColor color = null;
+				Agent agent = null;
+				// find a position
+				Random r = new Random();
+				int x = -1, y = -1;
+				while (!isAGoodPosition(x, y)) {
+					x = r.nextInt(tailleX);
+					y = r.nextInt(tailleY);
+				}
+
+				// find a direction
+				String direction = Direction.dir[r.nextInt(Direction.dir.length)];
+
+				if (game.equals("particules")) {
+
+					//find a color
+					color = MyColor.randomColor();
+
+					// create the agent
+					agent = new Particules(x, y, color, direction);
+				} else if (game.equals("water")){
+
+					if(nbShark > 0) {
+						color = MyColor.Rose;
+						nbShark--;
+						agent = new Shark(x, y, color, direction);
+					} else if (nbFish >= 0){
+						color = MyColor.Vert;
+						nbFish--;
+						agent = new Fish(x, y, color, direction);
+					}
+
+				} else if (game.equals("hunter")){
+                    if(nbAvatar > 0) {
+                        color = MyColor.Rose;
+                        nbAvatar--;
+                        agent = new Avatar(x, y, color, null);
+                    } else if(nbWalls > 0) {
+                        color = MyColor.Rouge;
+                        nbWalls--;
+                        agent = new Wall(x, y, color, null);
+                    } else if(nbHunter > 0){
+						color = MyColor.Jaune;
+						nbHunter--;
+						agent = new Hunter(x, y, color, null);
+					}
+
+                }
+
+				if(agent != null) {
+					agents.add(agent);
+					// put the agent in the core.Environment
+					tab[agent.getPosX()][agent.getPosY()] = agent;
+				}
 			}
-			
-			//find a color
-			MyColor color = MyColor.randomColor();
-			
-			// find a direction
-			String direction = Direction.dir[r.nextInt(Direction.dir.length)];
-			
-			// create the agent
-			Agent agent = new Agent(x, y, color, direction);
-			agents.add(agent);
-			
-			// put the agent in the core.Environment
-			tab[agent.getPosX()][agent.getPosY()] = agent;
-		}
-		return agents;
+			return agents;
+
 	}
 
 	/**
@@ -61,7 +109,7 @@ public class Environment extends Observable {
 	 * @param y
 	 * @return
 	 */
-	public Boolean isAGoodPosition(int x, int y){
+	public static Boolean isAGoodPosition(int x, int y){
 		if(x < 0 || y < 0 || x > tailleX || y > tailleY)
 			return false;
 		else if (tab[x][y] != null )
@@ -122,7 +170,37 @@ public class Environment extends Observable {
         return pos;
     }
 
+    public int getNbSharks() {
+		int cpt = 0;
+		for(int i = 0; i < SMA.listAgent.size();i++) {
+			if(SMA.listAgent.get(i).getClass().equals(Shark.class)) {
+				cpt ++;
+			}
+		}
+		return cpt;
+	}
+	public int getNbFish() {
+		int cpt = 0;
+		for(int i = 0; i < SMA.listAgent.size();i++) {
+			if(SMA.listAgent.get(i).getClass().equals(Fish.class)) {
+				cpt ++;
+			}
+		}
+		return cpt;
+	}
+
 	public int getNbTicks(){
         return nbTicks;
     }
+
+    public static void sendDijktra(int [][] dij){
+		for (int i = 0; i<tab.length; i++) {
+			for (int j = 0; j < tab[i].length; j++)
+				if (tab[i][j] instanceof Hunter) {
+					Hunter h = (Hunter) tab[i][j];
+					h.setDij(dij);
+				}
+		}
+	}
+
 }

@@ -9,7 +9,9 @@ public enum MyColor {
 	 Jaune,
 	 Rouge,
 	 Bleu,
-	 Vert;
+	 Vert,
+	Rose
+	 ;
 	
 	private static final List<MyColor> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
 	private static final int SIZE = VALUES.size();
