@@ -95,7 +95,7 @@ public class SMA extends Observable {
 
             }
 			if(Boolean.parseBoolean(PropertiesReader.getInstance().getProperties("csv")))
-				CSVManager.getInstance().writeCSV("TICK;"+environment.getNbSharks()+";"+environment.getNbFish()+"\n");
+				CSVManager.getInstance().writeCSV(environment.getNbSharks()+"\t"+environment.getNbFish()+"\n");
 		}
 		if(Boolean.parseBoolean(PropertiesReader.getInstance().getProperties("csv")))CSVManager.getInstance().stopRecord();
 
